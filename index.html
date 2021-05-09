@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="" />
+    <title>Programação Paralela com CUDA</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <!-- AOS Effect -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top"></a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase mr-auto">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#page-top">Início</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#cuda">CUDA</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#prog">Programação Paralela</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#progcuda">Programação em CUDA</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#parametro">Passagem Parâmetros</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#referencias">Referências</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container">
+            <h1 class="masthead-heading text-uppercase">CUDA</h1>
+            <div class="masthead-subheading">PROGRAMAÇÃO PARALELA</div>
+        </div>
+    </header>
+
+    <!-- About-->
+    <section class="page-section" id="cuda">
+        <div class="container">
+            <div class="row mt-4 mb-4">
+                <div class="container">
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h2 class="text-dark"><b>CUDA</b></h2>
+                            <p>CUDA (Compute Unified Device Architecture), é uma engine de computação, ela suporta diversas linguagens de programação como C, C++, Java, Fortran e Python. O foco da CUDA é utilizar-se das forças da unidade de processamento gráfico (GPU)
+                            para otimizar seus algoritmos com o uso da programação paralela. A GPU basicamente aumenta a performance do seu sistema, por exemplo em jogos é utilizado a CUDA para calcular propriedades físicas, como efeitos de água, fumaça.
+                            Além disso trabalha também com softwares de criptografia e simulações biológicas.
+                            </p>
+                        </div>
+                        <div class="col-md-6" id="associação">
+                            <img src="assets/img/cuda.jpg" alt="logo CUDA" height="300" width="500" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mb-4 mt-4">
+                <div class="container">
+                    <div class="row" id="prog">
+                        <div class="col-md-6">
+                            <img src="assets/img/paralela.png" alt="imagem representando programação paralela" height="300" width="500" class="img-fluid mt-4">
+                        </div>
+                        <div class="col-sm">
+                            <h2 class="text-dark"><b>Programação Paralela</b></h2>
+                            <p> A ideia da programação paralela é quando há uma tarefa muito complexa, deve-se dividí-la em tarefas menores a
+                            fim de obter uma solução mais rápida. Esse conceito é aplicado aos processadores dos computadores, que possuem vários
+                            núcleos que trabalham em conjunto resolvendo operações simultaneamente.
+                            </p>
+                            <p> A GPU, por possuir diversos processadores, torna-se o ambiente onde deve acontecer paralelização de processamento de dados,
+                                o que nos leva à programação que pode ser realizada de forma paralela dentro dos núcleos de uma GPU, melhorando a performance de desempenho. 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mb-4 mt-4">
+                <div class="container" >
+                    <div class="row" id="progcuda">
+                        <div class="col-md-6">
+                            <h2 class="text-dark"><b>Programação em CUDA</b></h2>
+                            <p>Para iniciar a programação em CUDA, o primeiro exemplo dado será o Hello World, mas antes é necessário abordar algumas observações:
+                                o compilador de CUDA, o nvcc interpreta linguagens C, C++ e Fortran naturalmente, ou seja, pode-se programar em C puro e compilar, mas
+                                há uma ressalva que ao realizar isso o processo será executado na CPU (host) e não na GPU (device) como é o objetivo.
+                            </p>
+                            <h2 class="text-dark"><b>Chamada de Kernel</b></h2>
+                            <p>
+                                É a chamada da função que será executada pela GPU de forma paralela. Essa função precisa ser marcada para que o
+                                compilador (nvcc) saiba que é um código para a GPU.
+                            </p>
+                            <p>
+                                O mecanismo da marcação __global__ alerta o compilador que a função deve ser compilada para executar na GPU ao invés da CPU. No
+                                exemplo da imagem ao lado, o compilador envia a função kernel() para outro compilador que gerencia sua execução nos núcleos da GPU enquanto que a função main() é executada na
+                                CPU.
+                            </p>
+                            <p>
+                                kernel<<<1,1>>>, o primeiro valor 1 significa a quantidade de blocos que serão executados de forma paralela a função kernel.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="assets/img/helloworld.png" alt="Hello World C e CUDA" height="300" width="500" class="img-fluid mt-2">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="row mb-4 mt-4">
+                <div class="container">
+                    <div class="row" id="parametro">
+                        <div class="col-md-6">
+                            <img src="assets/img/add.png" alt="Função adicionar CUDA" height="300" width="500" class="img-fluid mt-4">
+                            <img src="assets/img/ponteiro.png" alt="Exemplo cudaMalloc" height="300" width="500" class="img-fluid mt-4">
+                            <img src="assets/img/free.png" alt="Exemplo cudaFree" height="300" width="500" class="img-fluid mt-4">
+                            <img src="assets/img/memcpy.png" alt="Exemplo cudaMemcpy" height="300" width="500" class="img-fluid mt-4">
+                        </div>
+                        <div class="col-sm">
+                            <h2 class="text-dark"><b>Passagem de Parâmetros</b></h2>
+                            <p> Para exemplificar e explicar passagem de parâmetros, será utilizado a função adição em CUDA da imagem à esquerda.
+                                Podemos ver que a chamada de kernel funciona da mesma forma que uma função comum em C. Além disso precisamos alocar memória para realizar qualquer atividade na GPU
+                            </p>
+                            <p> A GPU, por possuir diversos processadores, torna-se o ambiente onde deve acontecer paralelização de processamento de dados,
+                                o que nos leva à programação que pode ser realizada de forma paralela dentro dos núcleos de uma GPU, melhorando a performance de desempenho. 
+                            </p>
+                            <h2 class="text-dark"><b>cudaMalloc</b></h2>
+                            <p> Esta chamada é semelhante ao malloc() do padrão em C, porém indica ao compilador de CUDA a alocação de memória na GPU. Os argumentos são: 
+                                1 - um ponteiro para o endereço que deseja guardar o novo espaço de memória alocado;
+                                2 - Tamanho da alocação que deseja realizar.
+                            </p>
+                            <h2 class="text-dark"><b>cudaFree</b></h2>
+                            <p> Esta chamada é semelhante ao free() do padrão em C, porém libera o espaço alocado pelo cudaMalloc. Passa dentro do parênteses o ponteiro que utilizou para armazenar os dados.
+                            </p>
+                            <h2 class="text-dark"><b>cudaMemcpy</b></h2>
+                            <p> Esta função funciona exatamente como memcpy() em C padrão. O primeiro
+                                parâmetro é a variável a receber a cópia (destino), o segundo é a variável de origem, o terceiro é o tamanho que será copiado e o último, diferente do C padrão, é uma instrução
+                                informando a origem dos ponteiros.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mb-4 mt-4">
+                <div class="container">
+                    <div class="row" id="referencias">
+                        <div class="col-md-12">
+                            <h2>Referências</h2>
+                            <p> https://canaltech.com.br/hardware/O-que-e-a-CUDA/</p>
+                            <p> http://www.mat.unimi.it/users/sansotte/cuda/CUDA_by_Example.pdf </p>
+                            <p> https://edisciplinas.usp.br/pluginfile.php/4146828/mod_resource/content/1/MaterialCUDA.pdf.</p>
+                            <p> https://www.tecmundo.com.br/computacao-grafica/10507-nvidia-cuda-o-que-e-e-como-funciona.htm</p>
+                            <p> http://www.inf.ufsc.br/~bosco.sobral/ensino/ine5645/Computacao_Paralelausando_CUDA_ricardo_wcca_COPPE_UFRJ.pdf</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </footer>
+    <div class="footer text-light ">
+        <div class="copy"><span class="current-year"></span>
+            <span>REA - Desenvolvido por <a href="https://www.instagram.com/matheusbilo/">Matheus Bilobrovec</a>.</span>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Theme JS -->
+    <script src="js/scripts.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
